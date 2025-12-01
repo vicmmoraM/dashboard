@@ -5,6 +5,7 @@ import { Grid } from '@mui/material';
 import './App.css'
 import HeaderUI from './components/HeaderUI';
 import AlertUI from './components/AlertUI';
+import SelectorUI from './components/SelectorUI';
 
 function App() {
   //const [count, setCount] = useState(0)
@@ -13,13 +14,13 @@ function App() {
     <Grid container spacing={5} justifyContent="center" alignItems="center">
 
          {/* Encabezado */}
-         <Grid size={{ xs: 12, md: 12 }}>Elemento: Encabezado<HeaderUI/></Grid>
+         <Grid size={{ xs: 12, md: 12 }}><HeaderUI/></Grid>
 
          {/* Alertas */}
-         <Grid size={{ xs: 12, md: 12 }}>Elemento: Alertas<AlertUI description='No se prevee lluvias'/></Grid>
+         <Grid size={{ xs: 12, md: 12 }}><AlertUI description='No se prevee lluvias'/></Grid>
 
          {/* Selector */}
-         <Grid size={{ xs: 12, md: 3  }}>Elemento: Selector</Grid>
+         <Grid size={{ xs: 12, md: 3  }}><SelectorUI/></Grid>
 
          {/* Indicadores */}
          <Grid size={{ xs: 12, md: 9 }}>Elemento: Indicadores</Grid>
