@@ -6,7 +6,7 @@ export default function HeaderUI(){
             variant = 'h2'
             component = 'h1'
             sx ={{fontWeigth: 'blod'}}>  
-            Dashboard Clima
+            Dashboard del Clima
         </Typography>
     )
 }
