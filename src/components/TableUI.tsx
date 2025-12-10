@@ -34,22 +34,25 @@ export default function TableUI({ data }: TableUIProps) {
    }
 
    const columns: GridColDef[] = [
-      { field: 'id', headerName: 'ID', width: 40 },
+      { field: 'id', headerName: 'ID', width: 50, flex: 0.3 },
       {
          field: 'time',
          headerName: 'Fecha y Hora',
-         width: 180,
+         width: 150,
+         flex: 1,
       },
       {
          field: 'temperature',
          headerName: `Temperatura (${data.hourly_units.temperature_2m})`,
-         width: 130,
+         width: 120,
+         flex: 0.8,
          type: 'number',
       },
       {
          field: 'windSpeed',
          headerName: `Viento (${data.hourly_units.wind_speed_10m})`,
-         width: 130,
+         width: 110,
+         flex: 0.8,
          type: 'number',
       },
       {
@@ -58,7 +61,8 @@ export default function TableUI({ data }: TableUIProps) {
          description: 'Resumen de las condiciones meteorológicas.',
          sortable: false,
          hideable: false,
-         width: 150,
+         width: 130,
+         flex: 1,
          valueGetter: (_, row) => `${row.temperature}° - ${row.windSpeed} km/h`,
       },
    ];
