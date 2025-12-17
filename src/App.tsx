@@ -1,7 +1,4 @@
-//import { useState } from 'react'
 import { Grid, CircularProgress, Alert, Button, Box, ThemeProvider, CssBaseline } from '@mui/material';
-//import reactLogo from './assets/react.svg'
-//import viteLogo from '/vite.svg'
 import './App.css'
 import HeaderUI from './components/HeaderUI';
 import AlertUI from './components/AlertUI';
@@ -11,25 +8,29 @@ import useFetchData from './hooks/useFetchData';
 import TableUI from './components/TableUI';
 import ChartUI from './components/ChartUI';
 import WeatherInsightsUI from './components/WeatherInsightsUI';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { lightTheme, darkTheme } from './theme';
 
 function App() {
-  //const [count, setCount] = useState(0)
-
-  // Utilice una variable de estado para almacenar la opción seleccionada por el usuario
-  // Inicializar como null para que el usuario deba seleccionar una ciudad primero
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
-
-  // Estado para el modo oscuro
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  // Comunique la opción seleccionada al hook useFetchData
   const { data, loading, error } = useFetchData(selectedOption);
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
   };
+
+  // Agregar clase al body para cambiar el fondo
+  useEffect(() => {
+    if (isDarkMode) {
+      document.body.classList.add('dark-mode');
+      document.body.classList.remove('light-mode');
+    } else {
+      document.body.classList.add('light-mode');
+      document.body.classList.remove('dark-mode');
+    }
+  }, [isDarkMode]);
 
   return (
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
@@ -91,7 +92,7 @@ function App() {
             {/* Alertas - Solo si hay ciudad seleccionada */}
             {selectedOption && data && (
               <Grid size={{ xs: 12, md: 12 }}>
-                <AlertUI description={`${selectedOption.charAt(0).toUpperCase() + selectedOption.slice(1)} — Los datos se actualizan automáticamente al cambiar de ciudad.`} />
+                <AlertUI description={`${selectedOption.charAt(0).toUpperCase() + selectedOption.slice(1)} – Los datos se actualizan automáticamente al cambiar de ciudad.`} />
               </Grid>
             )}
 
@@ -100,7 +101,7 @@ function App() {
               <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                 <IndicatorUI
                   title='Temperatura Actual'
-                  description={data ? `${data.current.temperature_2m} ${data.current_units.temperature_2m}` : '-- °C'}
+                  description={selectedOption && data ? `${data.current.temperature_2m} ${data.current_units.temperature_2m}` : '-- °C'}
                   type='temperature'
                 />
               </Grid>
@@ -108,7 +109,7 @@ function App() {
               <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                 <IndicatorUI
                   title='Sensación Térmica'
-                  description={data ? `${data.current.apparent_temperature} ${data.current_units.apparent_temperature}` : '-- °C'}
+                  description={selectedOption && data ? `${data.current.apparent_temperature} ${data.current_units.apparent_temperature}` : '-- °C'}
                   type='apparent'
                 />
               </Grid>
@@ -116,7 +117,7 @@ function App() {
               <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                 <IndicatorUI
                   title='Velocidad del Viento'
-                  description={data ? `${data.current.wind_speed_10m} ${data.current_units.wind_speed_10m}` : '-- km/h'}
+                  description={selectedOption && data ? `${data.current.wind_speed_10m} ${data.current_units.wind_speed_10m}` : '-- km/h'}
                   type='wind'
                 />
               </Grid>
@@ -124,7 +125,7 @@ function App() {
               <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                 <IndicatorUI
                   title='Humedad Relativa'
-                  description={data ? `${data.current.relative_humidity_2m} ${data.current_units.relative_humidity_2m}` : '-- %'}
+                  description={selectedOption && data ? `${data.current.relative_humidity_2m} ${data.current_units.relative_humidity_2m}` : '-- %'}
                   type='humidity'
                 />
               </Grid>
@@ -142,15 +143,25 @@ function App() {
                   textAlign: 'center',
                   py: 8,
                   px: 3,
-                  backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                  backgroundColor: isDarkMode ? 'rgba(26, 32, 39, 0.7)' : 'rgba(255, 255, 255, 0.7)',
                   borderRadius: 2,
-                  border: '2px dashed #90caf9'
+                  border: isDarkMode ? '2px dashed #90caf9' : '2px dashed #90caf9',
+                  backdropFilter: 'blur(10px)'
                 }}>
                   <Box component="span" sx={{ fontSize: '48px', display: 'block', mb: 2 }}>📍</Box>
-                  <Box component="h5" sx={{ color: '#0277bd', mb: 1, fontWeight: 600, fontSize: '1.5rem', margin: '0 0 8px 0' }}>
+                  <Box component="h5" sx={{
+                    color: isDarkMode ? '#90caf9' : '#0277bd',
+                    mb: 1,
+                    fontWeight: 600,
+                    fontSize: '1.5rem',
+                    margin: '0 0 8px 0'
+                  }}>
                     Selecciona una ciudad
                   </Box>
-                  <Box component="p" sx={{ color: '#546e7a', margin: 0 }}>
+                  <Box component="p" sx={{
+                    color: isDarkMode ? '#b0bec5' : '#546e7a',
+                    margin: 0
+                  }}>
                     Elige una ciudad del selector para ver el pronóstico detallado y gráficos
                   </Box>
                 </Box>
