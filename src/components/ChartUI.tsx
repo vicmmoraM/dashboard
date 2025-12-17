@@ -34,24 +34,39 @@ export default function ChartUI({ data }: ChartUIProps) {
 
    return (
       <>
-         <Typography variant="h5" component="div">
-            Temperatura y Viento (Próximas 24 horas)
+         <Typography
+            variant="h5"
+            component="div"
+            sx={{
+               mb: 2,
+               fontWeight: 600,
+               color: 'secondary.main'
+            }}
+         >
+            Pronóstico de las próximas 24 horas
          </Typography>
          <LineChart
             height={400}
             series={[
-               { 
-                  data: temperatureData, 
+               {
+                  data: temperatureData,
                   label: `Temperatura (${data.hourly_units.temperature_2m})`,
-                  color: '#ff6b6b'
+                  color: '#ff8a65',
+                  curve: 'natural'
                },
-               { 
-                  data: windData, 
+               {
+                  data: windData,
                   label: `Viento (${data.hourly_units.wind_speed_10m})`,
-                  color: '#4ecdc4'
+                  color: '#4dd0e1',
+                  curve: 'natural'
                },
             ]}
             xAxis={[{ scaleType: 'point', data: timeLabels }]}
+            sx={{
+               '& .MuiLineElement-root': {
+                  strokeWidth: 3
+               }
+            }}
          />
       </>
    );

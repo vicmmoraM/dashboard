@@ -11,7 +11,7 @@ function prepareTableData(data: OpenMeteoResponse) {
    return data.hourly.time.map((timeStr, index) => {
       const date = new Date(timeStr);
       const formattedTime = `${date.toLocaleDateString()} ${date.getHours()}:00`;
-      
+
       return {
          id: index,
          time: formattedTime,
@@ -70,7 +70,18 @@ export default function TableUI({ data }: TableUIProps) {
    const rows = prepareTableData(data);
 
    return (
-      <Box sx={{ height: 350, width: '100%' }}>
+      <Box sx={{ height: 450, width: '100%' }}>
+         <Typography
+            variant="h5"
+            component="div"
+            sx={{
+               mb: 2,
+               fontWeight: 600,
+               color: 'secondary.main'
+            }}
+         >
+            Datos Horarios Detallados
+         </Typography>
          <DataGrid
             rows={rows}
             columns={columns}
