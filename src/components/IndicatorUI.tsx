@@ -14,7 +14,7 @@ interface IndicatorUIProps {
     type?: 'temperature' | 'apparent' | 'wind' | 'humidity';
 }
 
-const getIconAndColor = (type?: string, isDarkMode?: boolean) => {
+const getIconAndColor = (type?: string) => {
     switch (type) {
         case 'temperature':
             return {
@@ -47,7 +47,7 @@ const getIconAndColor = (type?: string, isDarkMode?: boolean) => {
 export default function IndicatorUI(props: IndicatorUIProps) {
     const theme = useTheme();
     const isDarkMode = theme.palette.mode === 'dark';
-    const { icon, color } = getIconAndColor(props.type, isDarkMode);
+    const { icon, color } = getIconAndColor(props.type);
 
     return (
         <Card
